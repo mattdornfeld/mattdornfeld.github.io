@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\usepackage{mathrsfs, amsmath}    % need for subequations
+\usepackage{verbatim}   % useful for program listings
+\usepackage{color}      % use if color is used in text
+\usepackage{hyperref}   % use for hypertext links, including those to external documents and URLs
+
+\allowdisplaybreaks
+
+\begin{document}
+\section*{Feed Forward Neural Networks}
+In this part of the tutorial I will go through the components of a fully connected feed forward neural network and show how gradient descent and backpropagation can be used to optimize the parameters of the neural network for a certain task. Our training data will be a collection of $N$ objects represented by input and output vectors $(\textbf{x}_1, \textbf{y}_1),...,(\textbf{x}_N, \textbf{y}_N)$. Each vector $\textbf{x}_n$ has length $M$, where each entry of the vector represent a different feature (or measurement) of object $n$. The network itself has trainable parameters $\textbf{W}^l$ and $\textbf{b}^l$. The weights of the network are stored in the series of matrices $\textbf{W}^l$, where the $W_{ij}^l$ entry of the tensor represents the weight of the connection from neuron $j$ in layer $l-1$ to neuron $i$ in layer $l$. The series of vectors $\textbf{b}^l$ represent the offset the neurons in layer $l$, where the entry $b_{i}^l$ is the offset of neuron $i$ in layer $l$. The activations of and inputs to the neurons in the network can be represented with the following equations
+\begin{equation}	
+\begin{split}
+\textbf{a}^0 &= \textbf{x} \\
+\textbf{z}^{l} &= \textbf{W}^l \textbf{a}^{l-1} + \textbf{b}^{l} \\
+\textbf{a}^{l} &= \sigma_l (\textbf{z}^{l}) \\
+\hat{\textbf{y}} &= \textbf{a}^{N_l},
+\end{split}
+\end{equation}
+where the subscript $n$, which denotes the training example, is suppressed so as to make the equations more transparent. Here $\textbf{z}^l$ are the inputs to the neurons in layer $l$. By applying a sigmoidal activation function $\sigma_l$ to the inputs $\textbf{z}^l$ the activations $\textbf{a}^l$ of the neurons in layer $l$ are obtained. In practice this activation function is usually a tanh, logistic, or relu function. This function can also be different for each layer of the network. For simplicity of notation the activations in the layer $l=0$ are the input vector $\textbf{x}$, and the activations of the last layer $l=N_l$ are the predicted output $\hat{\textbf{y}}$. In component form these equations are.
+\begin{equation}
+\label{eq:nn_components}
+\begin{split}
+a_j^0 &= x_j \\
+z_i^{l} &= \sum_{j=0} W_{ij}^l a_j^{l-1} + b_i^{l} \\
+a_i^{l} &= \sigma_l (z_i^{l}) \\
+\hat{y} &= a_i^{N_l}
+\end{split}
+\end{equation}
+
+\section*{Cost Functions and Gradient Descent}
+The difference between the predicted output and the known output, for the $k^{th}$ training example, for a given set of parameters $\textbf{W}^l$ and $\textbf{b}^l$, can be quantified by defining the loss function $E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l)$. For regression problems the cost function is often chosen to be the squared error loss
+\begin{equation}
+E_k = \frac{1}{2} \left |\hat{\textbf{y}}_k - \textbf{y}_k \right|^2.
+\end{equation}
+For classification problems with multiple classes the cross entropy loss is used. This requires the use of the softmax activation function in the last layer to ensure the output neurons of the network output probabilities between $0$ and $1$. The softmax activation function is
+\begin{equation}
+\hat{\textbf{y}} = \sigma_{N_l}(\textbf{z}^{l-1}) = \frac{e^{\textbf{z}^{l-1}}}{\text{sum} \left( e^{\textbf{z}^{l-1}} \right)},
+\end{equation}
+where $\text{sum} \left( e^{\textbf{z}^{l-1}} \right)$ is the sum of elements of the vector $e^{\textbf{z}^{l-1}}$. The cross entropy loss of the $k^{th}$ training example is then given by the dot product between the true label vector $\textbf{y}_k$ and the the log of the predicted labels from the network $\log{\hat{\textbf{y}}_k}$
+\begin{equation}
+E_k = - \textbf{y}_k \cdot \log{\hat{\textbf{y}}_k}.
+\end{equation} 
+The cost function for the entire training set is then the sum of the losses for each individual training example
+\begin{equation}
+E \left(\textbf{W}^l, \textbf{b}^l \right) = \frac{1}{N} \sum_{k=0}^N E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l) 
+\end{equation}
+
+Optimizing the network for a particular training set means minimizing the cost function $E \left(\textbf{W}^l, \textbf{b}^l \right)$ as a function of the weights and offsets parameters. In practice the number of trainable parameters can be very large so it is impractical to use brute force to minimize the cost function. Gradient descent is one of the most common algorithms used to minimize cost functions. The algorithm works off the observation that from any given point in parameter space the fastest way to get to a local minimum of the cost function is to travel in the negative direction of the gradient of the cost function. Thus by updating the parameters according to the rules
+\begin{equation}
+\begin{split}
+W^l_{ij} &= W^l_{ij} - \alpha \frac{\partial E}{\partial W^l_{ij}} \\
+b^l_i &= b^l_{i} - \alpha \frac{\partial E}{\partial b^l_i} 
+\end{split}
+\end{equation}
+eventually the values of the trainable parameters will be such that the cost function is at a local minimum. The quantity $\alpha$ is called the learning rate. It should be tuned to a value that ensures the gradient descent algorithm reaches a local minimum in a reasonable amount of time.
+
+In order to use gradient descent the derivatives of the cost function with respect to the training parameters must be known. The chain rule can be used to calculate these quantities.
+\begin{equation}
+\begin{split}
+\frac{\partial E}{\partial W^l_{ij}} &= \frac{\partial E}{\partial z_i^{l} } \frac{\partial z_i^{l}}{\partial W^l_{ij}} \\
+\frac{\partial E}{\partial b^l_{ij}} &= \frac{\partial E}{\partial z_i^{l}} \frac{\partial z_i^{l}}{\partial b^l_i}
+\end{split}
+\end{equation}
+From Eq. \ref{eq:nn_components} the inputs to the neurons in layers ${l}$ can be written $z_i^{l}=\sum_{k=0} W_{ik}^{l} a_k^{l} + b_i^l$. Thus
+\begin{equation}
+\begin{split}
+\frac{\partial z_i^{l}}{\partial W^l_{ij}} &= \frac{\partial}{\partial W^l_{ij}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = a_j^{l-1} \\
+\frac{\partial z_i^{l}}{\partial b^l_i} &= \frac{\partial}{\partial b^l_{i}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = 1
+\end{split}
+\end{equation}
+
+\end{document}

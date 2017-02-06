@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Clean Blog - Sample Post</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="post.html">Sample Post</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Man must explore, and this is exploration at its greatest</h1>
+                        <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+                        <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>In this part of the tutorial I will go through the components of a fully connected feed forward neural network and show how gradient descent and backpropagation can be used to optimize the parameters of the neural network for a certain task. Our training data will be a collection of <span class="math inline">\(N\)</span> objects represented by input and output vectors <span class="math inline">\((\textbf{x}_1, \textbf{y}_1),...,(\textbf{x}_N, \textbf{y}_N)\)</span>. Each vector <span class="math inline">\(\textbf{x}_k\)</span> has length <span class="math inline">\(M\)</span>, where each entry of the vector represent a different feature (or measurement) of object <span class="math inline">\(j\)</span>. The network itself has trainable parameters <span class="math inline">\(\textbf{W}^l\)</span> and <span class="math inline">\(\textbf{b}^l\)</span>. The weights of the network are stored in the series of matrices <span class="math inline">\(\textbf{W}^l\)</span>, where <span class="math inline">\(W_{ij}^l\)</span> entry of the tensor represents the weight of the connection from neuron <span class="math inline">\(j\)</span> in layer <span class="math inline">\(l\)</span> to neuron <span class="math inline">\(i\)</span> in layer <span class="math inline">\(l+1\)</span>. The series of vectors <span class="math inline">\(\textbf{b}^l\)</span> represent the offset the neurons in layer <span class="math inline">\(l\)</span>, where the entry <span class="math inline">\(b_{i}^l\)</span> is the offset of neuron <span class="math inline">\(i\)</span> in layer <span class="math inline">\(l\)</span>. The activations of and inputs to the neurons in the network can be represented with the following equations <span class="math display">\[\begin{split}
+\textbf{a}^0 &amp;= \textbf{x} \\
+\textbf{z}^{l} &amp;= \textbf{W}^l \textbf{a}^{l-1} + \textbf{b}^{l} \\
+\textbf{a}^{l} &amp;= \sigma_l (\textbf{z}^{l}) \\
+\hat{\textbf{y}} &amp;= \textbf{a}^{N_l},
+\end{split}\]</span> where the subscript <span class="math inline">\(k\)</span>, which denotes the training example, is suppressed so as to make the equations more transparent. Here <span class="math inline">\(\textbf{z}^l\)</span> are the inputs to the neurons in layer <span class="math inline">\(l\)</span>. By applying a sigmoidal activation function <span class="math inline">\(\sigma_l\)</span> to the inputs <span class="math inline">\(\textbf{z}^l\)</span> the activations of the neurons in layer <span class="math inline">\(l\)</span> are obtained <span class="math inline">\(\textbf{a}^l\)</span>. In practice this activation function is usually a tanh, logistic, or relu function. This function can also be different for each layer of the network. For simplicity of notation the activations in the layer <span class="math inline">\(l=0\)</span> is the input vector <span class="math inline">\(\textbf{x}\)</span>, and the activations of the last layer <span class="math inline">\(l=N_l\)</span> is the predicted output <span class="math inline">\(\hat{\textbf{y}}\)</span>. In component form these equations are. <span class="math display">\[\label{eq:nn_components}
+\begin{split}
+a_j^0 &amp;= x_j \\
+z_i^{l} &amp;= \sum_{j=0} W_{ij}^l a_j^{l-1} + b_i^{l} \\
+a_i^{l} &amp;= \sigma_l (z_i^{l}) \\
+\hat{y} &amp;= a_i^{N_l}
+\end{split}\]</span></p>
+<h1 id="cost-functions-and-gradient-descent">Cost Functions and Gradient Descent</h1>
+<p>The difference between the predicted output and the known output, for the <span class="math inline">\(k^{th}\)</span> training example, for a given set of parameters <span class="math inline">\(\textbf{W}^l\)</span> and <span class="math inline">\(\textbf{b}^l\)</span>, can be quantified by defining the loss function <span class="math inline">\(E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l)\)</span>. A common choices for the loss function is the squared error loss <span class="math display">\[E_k = \frac{1}{2} \left |\hat{\textbf{y}}_k - \textbf{y}_k \right|^2\]</span> For classification problems with multiple classes the cross entropy loss is used. This requires the use of the softmax activation function in the last layer to ensure the output neurons of the network output probabilities between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. The softmax activation function is <span class="math display">\[\hat{\textbf{y}} = \sigma_{N_l}(\textbf{z}^{l-1}) = \frac{e^{\textbf{z}^{l-1}}}{\text{sum} \left( e^{\textbf{z}^{l-1}} \right)},\]</span> where <span class="math inline">\(\text{sum} \left( e^{\textbf{z}^{l-1}} \right)\)</span> is the sum of elements of the vector <span class="math inline">\(e^{\textbf{z}^{l-1}}\)</span>. The cross entropy loss of the <span class="math inline">\(k^{th}\)</span> training example is then given by the dot product between the true label vector <span class="math inline">\(\textbf{y}_k\)</span> and the the log of the predicted labels from the network <span class="math inline">\(\log{\hat{\textbf{y}}_k}\)</span> <span class="math display">\[E_k = - \textbf{y}_k \cdot \log{\hat{\textbf{y}}_k}.\]</span> The cost function for the entire training set is then the sum of the losses for each individual training example <span class="math display">\[E \left(\textbf{W}^l, \textbf{b}^l \right) = \frac{1}{N} \sum_{k=0}^N E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l)\]</span></p>
+<p>Optimizing the network for a particular training set means minimizing the cost function <span class="math inline">\(E \left(\textbf{W}^l, \textbf{b}^l \right)\)</span> as a function of the weights and offsets parameters. In practice the number of trainable parameters can be very large so it is impractical to use brute force to minimize the cost function. Gradient descent is one of the most common algorithms used to minimize cost functions. The algorithm works off the observation that from any given point in parameter space the fastest way to get to a local minimum of the cost function is to travel in the negative direction of the gradient of the cost function. Thus by updating the parameters according to the rules <span class="math display">\[\begin{split}
+W^l_{ij} &amp;= W^l_{ij} - \alpha \frac{\partial E}{\partial W^l_{ij}} \\
+b^l_i &amp;= b^l_{i} - \alpha \frac{\partial E}{\partial b^l_i} 
+\end{split}\]</span> eventually the values of the trainable parameters will be such that the cost function is at a local minimum. The quantity <span class="math inline">\(\alpha\)</span> is called the learning rate. It should be tuned to a value that ensures the gradient descent algorithm reaches a local minimum in a reasonable amount of time.</p>
+<p>In order to use gradient descent the derivatives of the cost function with respect to the training parameters must be known. The chain rule can be used to calculate these quantities. <span class="math display">\[\begin{split}
+\frac{\partial E}{\partial W^l_{ij}} &amp;= \frac{\partial E}{\partial z_i^{l} } \frac{\partial z_i^{l}}{\partial W^l_{ij}} \\
+\frac{\partial E}{\partial b^l_{ij}} &amp;= \frac{\partial E}{\partial z_i^{l}} \frac{\partial z_i^{l}}{\partial b^l_i}
+\end{split}\]</span> From Eq. [eq:nn_components] the inputs to the neurons in layers <span class="math inline">\({l}\)</span> can be written <span class="math inline">\(z_i^{l}=\sum_{k=0} W_{ik}^{l} a_k^{l} + b_i^l\)</span>. Thus <span class="math display">\[\begin{split}
+\frac{\partial z_i^{l}}{\partial W^l_{ij}} &amp;= \frac{\partial}{\partial W^l_{ij}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = a_j^{l-1} \\
+\frac{\partial z_i^{l}}{\partial b^l_i} &amp;= \frac{\partial}{\partial b^l_{i}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = 1
+\end{split}\]</span></p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
