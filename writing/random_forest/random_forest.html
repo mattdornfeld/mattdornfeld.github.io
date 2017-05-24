@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="decision-trees">Decision Trees</h1>
+<p>Decision tree learning is a type of supervised learning algorithm, whose goal is to take an object <span class="math inline">\(O\)</span> and assign it a prediction <span class="math inline">\(y\)</span> based on a vector of <span class="math inline">\(M\)</span> features <span class="math inline">\(x_m\)</span>. The prediction <span class="math inline">\(y\)</span> can be drawn from a set of discrete classes (classification tree) or a set of continuous numbers (regression tree). A decision tree is a type of graph, in which each node represents an element of the prediction process. Assigned to each node is a feature <span class="math inline">\(x_m\)</span>. The local decision process at each node is to decide which child node to travel to based on the value of <span class="math inline">\(x_m\)</span>. The terminal nodes of the tree are known as leafs. The leafs are labeled with the possible values of the prediction <span class="math inline">\(y\)</span>. Thus by traversing the decision tree from the root node to a terminal leaf each object <span class="math inline">\(O\)</span> can be assigned a prediction. The question becomes how do we train a decision tree to best predict the properties of a given dataset? Another way of formulating this question is, when growing the tree, how can we decide which feature to select at each node for the decision process?</p>
+<div class="sourceCode" language="Python"><pre class="sourceCode python"><code class="sourceCode python">
+<span class="kw">class</span> DecisionNode:
+    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, feature_index<span class="op">=</span><span class="va">None</span>, threshold<span class="op">=</span><span class="va">None</span>,
+                 leaf_value<span class="op">=</span><span class="va">None</span>, left_child<span class="op">=</span><span class="va">None</span>, right_child<span class="op">=</span><span class="va">None</span>):
+        <span class="va">self</span>.feature_index <span class="op">=</span> feature_index          
+        <span class="va">self</span>.threshold <span class="op">=</span> threshold          
+        <span class="va">self</span>.leaf_value <span class="op">=</span> leaf_value                  
+        <span class="va">self</span>.left_child <span class="op">=</span> left_child      
+        <span class="va">self</span>.right_child <span class="op">=</span> right_child</code></pre></div>
+<h2 id="splitting-algorithms">Splitting Algorithms</h2>
+</body>
+</html>

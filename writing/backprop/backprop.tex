@@ -13,62 +13,125 @@ In this part of the tutorial I will go through the components of a fully connect
 \begin{equation}	
 \begin{split}
 \textbf{a}^0 &= \textbf{x} \\
-\textbf{z}^{l} &= \textbf{W}^l \textbf{a}^{l-1} + \textbf{b}^{l} \\
-\textbf{a}^{l} &= \sigma_l (\textbf{z}^{l}) \\
-\hat{\textbf{y}} &= \textbf{a}^{N_l},
+\textbf{z}^l &= \textbf{W}^l \textbf{a}^{l-1} + \textbf{b}^l \\
+\textbf{a}^l &= \sigma_l (\textbf{z}^l) \\
+\hat{\textbf{y}} &= \textbf{a}^{L},
 \end{split}
 \end{equation}
-where the subscript $n$, which denotes the training example, is suppressed so as to make the equations more transparent. Here $\textbf{z}^l$ are the inputs to the neurons in layer $l$. By applying a sigmoidal activation function $\sigma_l$ to the inputs $\textbf{z}^l$ the activations $\textbf{a}^l$ of the neurons in layer $l$ are obtained. In practice this activation function is usually a tanh, logistic, or relu function. This function can also be different for each layer of the network. For simplicity of notation the activations in the layer $l=0$ are the input vector $\textbf{x}$, and the activations of the last layer $l=N_l$ are the predicted output $\hat{\textbf{y}}$. In component form these equations are.
+where the subscript $n$, which denotes the training example, is suppressed so as to make the equations more transparent. Here $\textbf{z}^l$ are the inputs to the neurons in layer $l$. By applying a sigmoidal activation function $\sigma_l$ to the inputs $\textbf{z}^l$ the activations $\textbf{a}^l$ of the neurons in layer $l$ are obtained. In practice this activation function is usually a tanh, logistic, or relu function. This function can also be different for each layer of the network. For simplicity of notation the activations in the layer $l=0$ are the input vector $\textbf{x}$, and the activations of the last layer $l=L$ are the predicted output $\hat{\textbf{y}}$. In component form these equations are.
 \begin{equation}
 \label{eq:nn_components}
 \begin{split}
 a_j^0 &= x_j \\
-z_i^{l} &= \sum_{j=0} W_{ij}^l a_j^{l-1} + b_i^{l} \\
-a_i^{l} &= \sigma_l (z_i^{l}) \\
-\hat{y} &= a_i^{N_l}
+z_i^l &= \sum_{j=0} W_{ij}^l a_j^{l-1} + b_i^l \\
+a_i^l &= \sigma_l (z_i^l) \\
+\hat{y} &= a_i^{L}
 \end{split}
 \end{equation}
 
-\section*{Cost Functions and Gradient Descent}
-The difference between the predicted output and the known output, for the $k^{th}$ training example, for a given set of parameters $\textbf{W}^l$ and $\textbf{b}^l$, can be quantified by defining the loss function $E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l)$. For regression problems the cost function is often chosen to be the squared error loss
+\section*{Cost Functions}
+The difference between the predicted output and the known output, for the $n^{th}$ training example, for a given set of parameters $\textbf{W}^l$ and $\textbf{b}^l$, can be quantified by defining the loss function $E_k(\textbf{x}_n, \textbf{y}_n ; \textbf{W}^l, \textbf{b}^l)$. For regression problems the cost function is often chosen to be the squared error loss
 \begin{equation}
-E_k = \frac{1}{2} \left |\hat{\textbf{y}}_k - \textbf{y}_k \right|^2.
+E_n = \frac{1}{2} \left |\hat{\textbf{y}}_n - \textbf{y}_n \right|^2
 \end{equation}
 For classification problems with multiple classes the cross entropy loss is used. This requires the use of the softmax activation function in the last layer to ensure the output neurons of the network output probabilities between $0$ and $1$. The softmax activation function is
 \begin{equation}
-\hat{\textbf{y}} = \sigma_{N_l}(\textbf{z}^{l-1}) = \frac{e^{\textbf{z}^{l-1}}}{\text{sum} \left( e^{\textbf{z}^{l-1}} \right)},
+\hat{\textbf{y}} = \sigma_L(\textbf{z}^{l-1}) = \frac{e^{\textbf{z}^{l-1}}}{\text{sum} \left( e^{\textbf{z}^{l-1}} \right)},
 \end{equation}
-where $\text{sum} \left( e^{\textbf{z}^{l-1}} \right)$ is the sum of elements of the vector $e^{\textbf{z}^{l-1}}$. The cross entropy loss of the $k^{th}$ training example is then given by the dot product between the true label vector $\textbf{y}_k$ and the the log of the predicted labels from the network $\log{\hat{\textbf{y}}_k}$
+where $\text{sum} \left( e^{\textbf{z}^{l-1}} \right)$ is the sum of elements of the vector $e^{\textbf{z}^{l-1}}$. The cross entropy loss of the $n^{th}$ training example is then given by the dot product between the true label vector $\textbf{y}_n$ and the the log of the predicted labels from the network $\log{\hat{\textbf{y}}_n}$
 \begin{equation}
-E_k = - \textbf{y}_k \cdot \log{\hat{\textbf{y}}_k}.
+E_n = - \textbf{y}_n \cdot \log{\hat{\textbf{y}}_n}.
 \end{equation} 
 The cost function for the entire training set is then the sum of the losses for each individual training example
 \begin{equation}
-E \left(\textbf{W}^l, \textbf{b}^l \right) = \frac{1}{N} \sum_{k=0}^N E_k(\textbf{x}_k, \textbf{y}_k ; \textbf{W}^l, \textbf{b}^l) 
+E \left(\textbf{W}^l, \textbf{b}^l \right) = \frac{1}{N} \sum_{n=0}^N E_n(\textbf{x}_n, \textbf{y}_n ; \textbf{W}^l, \textbf{b}^l) 
 \end{equation}
 
-Optimizing the network for a particular training set means minimizing the cost function $E \left(\textbf{W}^l, \textbf{b}^l \right)$ as a function of the weights and offsets parameters. In practice the number of trainable parameters can be very large so it is impractical to use brute force to minimize the cost function. Gradient descent is one of the most common algorithms used to minimize cost functions. The algorithm works off the observation that from any given point in parameter space the fastest way to get to a local minimum of the cost function is to travel in the negative direction of the gradient of the cost function. Thus by updating the parameters according to the rules
+\subsection*{Minimizing the Cost Function with Backpropagation}
+Optimizing the network for a particular training set means minimizing the cost function $E \left(\textbf{W}^l, \textbf{b}^l \right)$ as a function of the weights and offsets parameters. In practice the number of trainable parameters can be very large so it is impractical to use brute force to minimize the cost function. Backpropagation is the traditional gradient descent algorithm combined with the use of the chain rule to calculate the derivatives of the cost function with respect to the training parameters. Gradient descent works off the observation that from any given point in parameter space the fastest way to get to a local minimum of the cost function is to travel in the negative direction of the gradient of the cost function at that point. Thus by updating the parameters according to the rules
 \begin{equation}
 \begin{split}
-W^l_{ij} &= W^l_{ij} - \alpha \frac{\partial E}{\partial W^l_{ij}} \\
-b^l_i &= b^l_{i} - \alpha \frac{\partial E}{\partial b^l_i} 
+W^l_{ij} & \rightarrow W^l_{ij} - \alpha \frac{\partial E}{\partial W^l_{ij}} \\
+b^l_i & \rightarrow b^l_{i} - \alpha \frac{\partial E}{\partial b^l_i} 
 \end{split}
 \end{equation}
 eventually the values of the trainable parameters will be such that the cost function is at a local minimum. The quantity $\alpha$ is called the learning rate. It should be tuned to a value that ensures the gradient descent algorithm reaches a local minimum in a reasonable amount of time.
 
-In order to use gradient descent the derivatives of the cost function with respect to the training parameters must be known. The chain rule can be used to calculate these quantities.
+From the above update rules it can be seen that gradient descent requires knowledge of the derivatives of the cost function with respect to the training parameters. In theory these derivatives can be calculated numerically, but this approach is inefficient and prone to numerical error. A better approach is to use the chain rule to write the derivatives as
 \begin{equation}
 \begin{split}
-\frac{\partial E}{\partial W^l_{ij}} &= \frac{\partial E}{\partial z_i^{l} } \frac{\partial z_i^{l}}{\partial W^l_{ij}} \\
-\frac{\partial E}{\partial b^l_{ij}} &= \frac{\partial E}{\partial z_i^{l}} \frac{\partial z_i^{l}}{\partial b^l_i}
+\frac{\partial E_n}{\partial W^l_{ij}} &= \frac{\partial E_n}{\partial z_i^l } \frac{\partial z_i^l}{\partial W^l_{ij}} \\
+\frac{\partial E_n}{\partial b^l_{ij}} &= \frac{\partial E_n}{\partial z_i^l} \frac{\partial z_i^l}{\partial b^l_i}
 \end{split}
 \end{equation}
-From Eq. \ref{eq:nn_components} the inputs to the neurons in layers ${l}$ can be written $z_i^{l}=\sum_{k=0} W_{ik}^{l} a_k^{l} + b_i^l$. Thus
+From the definition of $z_i^l$ the inputs to the neurons in layers $l$ can be written $z_i^l=\sum_{k=0} W_{ik}^l a_k^l + b_i^l$. Thus
 \begin{equation}
 \begin{split}
-\frac{\partial z_i^{l}}{\partial W^l_{ij}} &= \frac{\partial}{\partial W^l_{ij}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = a_j^{l-1} \\
-\frac{\partial z_i^{l}}{\partial b^l_i} &= \frac{\partial}{\partial b^l_{i}} \left( \sum_{k=0} W_{ik}^{l} a_k^{l-1} + b_i^l \right) = 1
+\frac{\partial z_i^l}{\partial W^l_{ij}} &= \frac{\partial}{\partial W^l_{ij}} \left( \sum_{k=0} W_{ik}^l a_k^{l-1} + b_i^l \right) = a_j^{l-1} \\
+\frac{\partial z_i^l}{\partial b^l_i} &= \frac{\partial}{\partial b^l_{i}} \left( \sum_{k=0} W_{ik}^l a_k^{l-1} + b_i^l \right) = 1
 \end{split}
 \end{equation}
+Furthermore the derivative $\frac{\partial E_n}{\partial z_i^l }$ has the interpretation of being the "error" of the network in layer $l$. This quantity is usually given the name $\delta_i^l = \frac{\partial E_n}{\partial z_i^l }$. Inserting these expressions into the above equations, the derivatives of the cost function at layer $l$ can be written in terms of the activation at layer $l-1$ and the errors at layer $l$.
+\begin{equation}
+\begin{split}
+\frac{\partial E_n}{\partial W^l_{ij}} &= \delta_i^l a_j^{l-1} \\
+\frac{\partial E_n}{\partial b^l_{ij}} &= \delta_i^l
+\end{split}
+\end{equation}
+Now all that's left is to write the errors in terms of the activations using the chain rule. For a hidden layer this error can be written as
+\begin{equation}
+\delta_j^{l-1} = \frac{\partial E_n}{\partial z_j^{l-1} } = \sum_k \frac{\partial E_n}{\partial z_k^l } \frac{\partial z_k^l}{\partial z_j^{l-1} }
+\end{equation}
+Using the definition of the inputs to the neurons in layer $l$
+\begin{equation}
+\begin{split}
+\frac{\partial z_k^l}{\partial z_j^{l-1}} &= \frac{\partial }{\partial z_j^{l-1}} \left(\sum_k W_{ik}^l a_k^{l-1} + b_k^l \right) \\
+&= \frac{\partial }{\partial z_j^{l-1}} \left(\sum_k W_{ik}^l \sigma_l (z_k^{l-1}) + b_k^l \right) \\
+&=W_{ij}^l \sigma_l '(z_j^{l-1}) 
+\end{split}
+\end{equation}
+Thus
+\begin{equation}
+\begin{split}
+\delta_j^{l-1} 
+&= \sum_k \frac{\partial E_n}{\partial z_k^l } W_{kj}^l \sigma_l '(z_j^{l-1}) \\
+&= \sigma_l '(z_j^{l-1}) \sum_k \delta_k^l W_{kj}^l 
+\end{split}
+\end{equation}
+For the output layer
+\begin{equation}
+\delta_i^{L} 
+= \frac{\partial E_n}{\partial z_i^{L}} 
+= \frac{\partial E_n}{\partial \hat{y}_i} \frac{\partial \hat{y}_i}{\partial z_i^{L}}  
+\end{equation}
+For the squared error loss function (suppressing the $n$ subscript) this becomes
+\begin{equation}
+\delta_i^{L} 
+= \frac{\partial}{\partial z_i^L} \left(\frac{1}{2} \left |\hat{\textbf{y}} - \textbf{y} \right|^2 \right) \frac{\partial \hat{y}_i}{\partial z_i^{L}}
+= \left( \hat{y}_i - y_i \right) \sigma_L'(z_i^L)
+\end{equation}
+For the cross entropy loss this becomes
+\begin{equation}
+\delta_i^{L} 
+= - \frac{\partial}{\partial \hat{y}_i} \left(\textbf{y} \cdot \log{\hat{\textbf{y}}} \right) \frac{\partial \hat{y}_i}{\partial z_i^{L}}
+= -\frac{y_i}{\hat{y}_i} \sigma_L'(z_i^L)
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}

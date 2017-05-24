@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\usepackage{mathrsfs, amsmath}    % need for subequations
+\usepackage{verbatim}   % useful for program listings
+\usepackage{color}      % use if color is used in text
+\usepackage{hyperref}   % use for hypertext links, including those to external documents and URLs
+
+\allowdisplaybreaks
+
+\begin{document}
+\section{Decision Trees}
+Decision tree learning is a type of supervised learning algorithm, whose goal is to take an object $O$ and assign it a prediction $y$ based on a vector of $M$ features $x_m$. The prediction $y$ can be drawn from a set of discrete classes (classification tree) or a set of continuous numbers (regression tree). A decision tree is a type of graph, in which each node represents an element of the prediction process. Assigned to each node is a feature $x_m$. The local decision process at each node is to decide which child node to travel to based on the value of $x_m$. The terminal nodes of the tree are known as leafs. The leafs are labeled with the possible values of the prediction $y$. Thus by traversing the decision tree from the root node to a terminal leaf each object $O$ can be assigned a prediction. The question becomes how do we train a decision tree to best predict the properties of a given dataset? Another way of formulating this question is, when growing the tree, how can we decide which feature to select at each node for the decision process?
+
+\begin{lstlisting}[language=Python]
+
+class DecisionNode:
+    def __init__(self, feature_index=None, threshold=None,
+                 leaf_value=None, left_child=None, right_child=None):
+        self.feature_index = feature_index          
+        self.threshold = threshold          
+        self.leaf_value = leaf_value                  
+        self.left_child = left_child      
+        self.right_child = right_child
+\end{lstlisting}
+
+\section{Splitting Algorithms}
+The id3 algorithm is used
+\end{document}
